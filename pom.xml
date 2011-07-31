@@ -29,7 +29,7 @@
 	</parent>
 
 	<name>X.509 Utilities</name>
-	<description>X.509 Utilities provides an easy way to sign and verify tokens using X.509 certificates.</description>
+	<description>X.509 Utilities provides an easy way to create and verify signatures using X.509 certificates.</description>
 	<url>https://github.com/syphr42/utils-x509</url>
 	<inceptionYear>2011</inceptionYear>
 	
