@@ -30,7 +30,7 @@ sub HELP_MESSAGE()
 
 sub VERSION_MESSAGE()
 {
-	printf("certs.pl 1.0\n");
+	printf("$0 0.1\n");
 	printf("Copyright 2011 Gregory P. Moyer\n");
 	printf("\n");
 	printf("Licensed under the Apache License, Version 2.0 (the \"License\");\n");
