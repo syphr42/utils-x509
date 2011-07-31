@@ -16,17 +16,29 @@
 # limitations under the License.
 #
 
+if [ $# -ne 1 ]
+then
+	echo "Usage: `basename $0` -n keyname"
+	echo "Generate an X.509 certificate, a PEM encoded private key, and a PKCS8 encoded private key."
+	echo ""
+	echo "  -n KEYNAME               a name to identify the generate certificate and keys"
+	
+	exit 1;
+fi
+
+NAME=$1
+
 openssl req -x509 \
             -nodes \
             -days 365 \
             -subj "/C=US/ST=Somestate/L=Anytown/CN=localhost" \
             -newkey rsa:1024 \
-            -keyout test.key \
-            -out test.cert
+            -keyout $NAME.pem \
+            -out $NAME.x509
 
 openssl pkcs8 -topk8 \
-              -in test.key \
-              -out test.pkcs8 \
+              -in $NAME.pem \
+              -out $NAME.pkcs8 \
               -nocrypt \
               -inform PEM \
               -outform DER
