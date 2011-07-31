@@ -1,0 +1,35 @@
+Create an X.509 Signature
+
+  Generate a new signature using an existing key.
+
++------------------------------------------------------
+  String message = ...
+  InputStream key = ...
+
+  byte[] signature = X509Utils.sign(message,
+                                    key,
+                                    KeyAlgorithm.RSA,
+                                    SignatureAlgorithm.MD5_RSA);
++------------------------------------------------------
+
+Verify an X.509 Signature
+
+  Validate a signature using a public certificate.
+  
++------------------------------------------------------
+  String message = ...
+  byte[] signature = ...
+  InputStream certificate = ...
+
+  if (X509Utils.verify(message,
+                       signature,
+                       SignatureAlgorithm.MD5_RSA,
+                       certificate))
+  {
+      System.out.println("Valid!");
+  }
+  else
+  {
+      System.out.println("Invalid!");  
+  }
++------------------------------------------------------
