@@ -38,7 +38,7 @@ public class X509UtilsTest
 
     private static final String SIG_RESOURCE = "/sig/sig.data";
 
-    private static final String TOKEN = "qwertyuioplkjhgfdsazxcvbnm0987654321";
+    private static final String MESSAGE = "qwertyuioplkjhgfdsazxcvbnm0987654321";
 
     @Test
     public void testSign() throws IOException,
@@ -50,7 +50,7 @@ public class X509UtilsTest
 
         try
         {
-            byte[] actual = X509Utils.sign(TOKEN,
+            byte[] actual = X509Utils.sign(MESSAGE,
                                            key,
                                            KeyAlgorithm.RSA,
                                            SignatureAlgorithm.MD5_RSA);
@@ -86,8 +86,8 @@ public class X509UtilsTest
         {
             try
             {
-                Assert.assertTrue(X509Utils.verify(TOKEN,
-                                                   X509Utils.sign(TOKEN,
+                Assert.assertTrue(X509Utils.verify(MESSAGE,
+                                                   X509Utils.sign(MESSAGE,
                                                                   key,
                                                                   KeyAlgorithm.RSA,
                                                                   SignatureAlgorithm.MD5_RSA),

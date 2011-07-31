@@ -48,8 +48,8 @@ public class X509Utils
     /**
      * Create a signature using the given token and private key.
      *
-     * @param token
-     *            the token to sign
+     * @param message
+     *            the message to sign
      * @param key
      *            the private key to use to create the signature (this must be
      *            PKCS8 encoded)
@@ -68,7 +68,7 @@ public class X509Utils
      * @throws SignatureException
      *             if there is an error while generating the signature
      */
-    public static byte[] sign(String token,
+    public static byte[] sign(String message,
                               InputStream key,
                               KeyAlgorithm keyAlg,
                               SignatureAlgorithm sigAlg) throws IOException,
@@ -89,7 +89,7 @@ public class X509Utils
 
             Signature sig = Signature.getInstance(sigAlg.getAlgorithm());
             sig.initSign(privateKey);
-            sig.update(token.getBytes());
+            sig.update(message.getBytes());
             return sig.sign();
         }
         catch (NoSuchAlgorithmException e)
@@ -105,8 +105,8 @@ public class X509Utils
     /**
      * Verify a signature using the given token and certificate.
      *
-     * @param token
-     *            the token to which the signature belongs
+     * @param message
+     *            the message to which the signature belongs
      * @param signature
      *            the signature to verify
      * @param sigAlg
@@ -122,7 +122,7 @@ public class X509Utils
      * @throws SignatureException
      *             if the signature is not valid
      */
-    public static boolean verify(String token,
+    public static boolean verify(String message,
                                  byte[] signature,
                                  SignatureAlgorithm sigAlg,
                                  InputStream certificate) throws CertificateException,
@@ -135,7 +135,7 @@ public class X509Utils
         {
             Signature sig = Signature.getInstance(sigAlg.getAlgorithm());
             sig.initVerify(cert);
-            sig.update(token.getBytes());
+            sig.update(message.getBytes());
             return sig.verify(signature);
         }
         catch (NoSuchAlgorithmException e)
