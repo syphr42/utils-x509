@@ -22,14 +22,14 @@ import org.junit.Test;
 public class SignatureAlgorithmTest
 {
     @Test
-    public void testGetAlgorithmsRsa()
+    public void testGetRsaAlgorithmsMatch()
     {
         Assert.assertEquals(SignatureAlgorithm.getRsaAlgorithms(),
                             SignatureAlgorithm.getAlgorithms(KeyAlgorithm.RSA));
     }
 
     @Test
-    public void testGetAlgorithmsDsa()
+    public void testGetDsaAlgorithmsMatch()
     {
         Assert.assertEquals(SignatureAlgorithm.getDsaAlgorithms(),
                             SignatureAlgorithm.getAlgorithms(KeyAlgorithm.DSA));
@@ -40,5 +40,23 @@ public class SignatureAlgorithmTest
     {
         Assert.assertFalse(SignatureAlgorithm.getAlgorithms(KeyAlgorithm.RSA)
                                              .equals(SignatureAlgorithm.getAlgorithms(KeyAlgorithm.DSA)));
+    }
+
+    @Test
+    public void testGetRsaAlgorithms()
+    {
+        for (SignatureAlgorithm sigAlg : SignatureAlgorithm.getRsaAlgorithms())
+        {
+            Assert.assertTrue(sigAlg.getAlgorithm().contains("RSA"));
+        }
+    }
+
+    @Test
+    public void testGetDsaAlgorithms()
+    {
+        for (SignatureAlgorithm sigAlg : SignatureAlgorithm.getDsaAlgorithms())
+        {
+            Assert.assertTrue(sigAlg.getAlgorithm().contains("DSA"));
+        }
     }
 }
