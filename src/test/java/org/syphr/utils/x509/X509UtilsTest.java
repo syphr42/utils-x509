@@ -27,18 +27,18 @@ import junit.framework.Assert;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
-import org.syphr.utils.x509.KeyAlgorithm;
-import org.syphr.utils.x509.SignatureAlgorithm;
-import org.syphr.utils.x509.X509Utils;
 
 public class X509UtilsTest
 {
-    private static final String KEY_RESOURCE = "/cert/test.pkcs8";
-    private static final String CERT_RESOURCE = "/cert/test.cert";
+    private static final String KEY1_RESOURCE = "/cert/test1.pkcs8";
+    private static final String CERT1_RESOURCE = "/cert/test1.x509";
 
-    private static final String SIG_RESOURCE = "/sig/sig.data";
+    private static final String CERT2_RESOURCE = "/cert/test2.x509";
 
-    private static final String MESSAGE = "qwertyuioplkjhgfdsazxcvbnm0987654321";
+    private static final String SIG_PAIR1_MESSAGE1_RESOURCE = "/sig/sig.data";
+
+    private static final String MESSAGE1 = "qwertyuioplkjhgfdsazxcvbnm0987654321";
+    private static final String MESSAGE2 = "1234567890mnbvcxzasdfghjklpoiuytrewq";
 
     @Test
     public void testSign() throws IOException,
@@ -46,16 +46,16 @@ public class X509UtilsTest
                           InvalidKeySpecException,
                           SignatureException
     {
-        InputStream key = getKey();
+        InputStream key = getKey1();
 
         try
         {
-            byte[] actual = X509Utils.sign(MESSAGE,
+            byte[] actual = X509Utils.sign(MESSAGE1,
                                            key,
                                            KeyAlgorithm.RSA,
                                            SignatureAlgorithm.MD5_RSA);
 
-            InputStream expectedSteam = getSigExpected();
+            InputStream expectedSteam = getSigMessage1Expected();
             try
             {
                 byte[] expected = IOUtils.toByteArray(expectedSteam);
@@ -73,21 +73,21 @@ public class X509UtilsTest
     }
 
     @Test
-    public void testVerify() throws IOException,
-                            CertificateException,
-                            InvalidKeyException,
-                            SignatureException,
-                            InvalidKeySpecException
+    public void testVerifyCorrect() throws IOException,
+                                   CertificateException,
+                                   InvalidKeyException,
+                                   SignatureException,
+                                   InvalidKeySpecException
     {
-        InputStream key = getKey();
-        InputStream cert = getCert();
+        InputStream key = getKey1();
+        InputStream cert = getCert1();
 
         try
         {
             try
             {
-                Assert.assertTrue(X509Utils.verify(MESSAGE,
-                                                   X509Utils.sign(MESSAGE,
+                Assert.assertTrue(X509Utils.verify(MESSAGE1,
+                                                   X509Utils.sign(MESSAGE1,
                                                                   key,
                                                                   KeyAlgorithm.RSA,
                                                                   SignatureAlgorithm.MD5_RSA),
@@ -105,19 +105,90 @@ public class X509UtilsTest
         }
     }
 
-    private InputStream getKey() throws IOException
+    @Test
+    public void testVerifyMessageIncorrect() throws IOException,
+                                            CertificateException,
+                                            InvalidKeyException,
+                                            SignatureException,
+                                            InvalidKeySpecException
     {
-        return getResource(KEY_RESOURCE);
+        InputStream key = getKey1();
+        InputStream cert = getCert1();
+
+        try
+        {
+            try
+            {
+                Assert.assertFalse(X509Utils.verify(MESSAGE2,
+                                                    X509Utils.sign(MESSAGE1,
+                                                                   key,
+                                                                   KeyAlgorithm.RSA,
+                                                                   SignatureAlgorithm.MD5_RSA),
+                                                    SignatureAlgorithm.MD5_RSA,
+                                                    cert));
+            }
+            finally
+            {
+                key.close();
+            }
+        }
+        finally
+        {
+            cert.close();
+        }
     }
 
-    private InputStream getCert() throws IOException
+    @Test
+    public void testVerifyKeyIncorrect() throws IOException,
+                                        CertificateException,
+                                        InvalidKeyException,
+                                        SignatureException,
+                                        InvalidKeySpecException
     {
-        return getResource(CERT_RESOURCE);
+        InputStream key = getKey1();
+        InputStream cert = getCert2();
+
+        try
+        {
+            try
+            {
+                Assert.assertFalse(X509Utils.verify(MESSAGE1,
+                                                    X509Utils.sign(MESSAGE1,
+                                                                   key,
+                                                                   KeyAlgorithm.RSA,
+                                                                   SignatureAlgorithm.MD5_RSA),
+                                                    SignatureAlgorithm.MD5_RSA,
+                                                    cert));
+            }
+            finally
+            {
+                key.close();
+            }
+        }
+        finally
+        {
+            cert.close();
+        }
     }
 
-    private InputStream getSigExpected() throws IOException
+    private InputStream getKey1() throws IOException
     {
-        return getResource(SIG_RESOURCE);
+        return getResource(KEY1_RESOURCE);
+    }
+
+    private InputStream getCert1() throws IOException
+    {
+        return getResource(CERT1_RESOURCE);
+    }
+
+    private InputStream getCert2() throws IOException
+    {
+        return getResource(CERT2_RESOURCE);
+    }
+
+    private InputStream getSigMessage1Expected() throws IOException
+    {
+        return getResource(SIG_PAIR1_MESSAGE1_RESOURCE);
     }
 
     private InputStream getResource(String resource) throws IOException
