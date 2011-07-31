@@ -50,7 +50,7 @@
 	<scm>
 		<url>https://github.com/syphr42/utils-x509</url>
 		<connection>scm:git:git://github.com/syphr42/utils-x509.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com:syphr42/utils-x509.git</developerConnection>
+		<developerConnection>scm:git:ssh://git@github.com/syphr42/utils-x509.git</developerConnection>
 	</scm>
 
 	<developers>
