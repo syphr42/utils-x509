@@ -21,10 +21,11 @@ $Getopt::Std::STANDARD_HELP_VERSION = "true";
 
 sub HELP_MESSAGE()
 {
-	printf("Usage: $0 -n keyname\n");
+	printf("Usage: $0 -n keyname [-h host]\n");
 	printf("Generate an X.509 certificate, a PEM encoded private key, and a PKCS8 encoded private key.\n");
 	printf("\n");
 	printf("  -n KEYNAME               a name to identify the generate certificate and keys\n");
+	printf("  -h HOST                  the host name to be identified in the certificate\n");
 }
 
 sub VERSION_MESSAGE()
@@ -45,8 +46,9 @@ sub VERSION_MESSAGE()
 	printf("limitations under the License.\n");
 }
 
-getopts('n:', \%cmdLine);
+getopts('n:h:', \%cmdLine);
 $name = $cmdLine{n};
+$host = $cmdLine{h};
 
 if (!$name)
 {
@@ -55,5 +57,10 @@ if (!$name)
     exit(1);
 }
 
-system("openssl req -x509 -nodes -days 365 -subj '/C=US/ST=Somestate/L=Anytown/CN=localhost' -newkey rsa:1024 -keyout $name.pem -out $name.x509") == 0 or die("Failed to generate X.509 certificate: $!\n");
+if (!$host)
+{
+	$host = "localhost";
+}
+
+system("openssl req -x509 -nodes -days 365 -subj \"/C=US/ST=Somestate/L=Anytown/CN=$host\" -newkey rsa:1024 -keyout $name.pem -out $name.x509") == 0 or die("Failed to generate X.509 certificate: $!\n");
 system("openssl pkcs8 -topk8 -in $name.pem -out $name.pkcs8 -nocrypt -inform PEM -outform DER") == 0 or die("Failed to convert private key to PKCS8: $!\n");

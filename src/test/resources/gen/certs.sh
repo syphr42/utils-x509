@@ -16,22 +16,30 @@
 # limitations under the License.
 #
 
-if [ $# -ne 1 ]
+if [ $# -lt 1 ]
 then
-	echo "Usage: `basename $0` -n keyname"
+	echo "Usage: `basename $0` keyname [host]"
 	echo "Generate an X.509 certificate, a PEM encoded private key, and a PKCS8 encoded private key."
 	echo ""
-	echo "  -n KEYNAME               a name to identify the generate certificate and keys"
+	echo "  KEYNAME                  a name to identify the generate certificate and keys"
+	echo "  HOST                     the host name to be identified in the certificate"
 	
 	exit 1;
 fi
 
 NAME=$1
 
+if [ $# -gt 1 ]
+then
+	HOST=$2
+else
+	HOST=localhost
+fi
+
 openssl req -x509 \
             -nodes \
             -days 365 \
-            -subj "/C=US/ST=Somestate/L=Anytown/CN=localhost" \
+            -subj "/C=US/ST=Somestate/L=Anytown/CN=$HOST" \
             -newkey rsa:1024 \
             -keyout $NAME.pem \
             -out $NAME.x509
