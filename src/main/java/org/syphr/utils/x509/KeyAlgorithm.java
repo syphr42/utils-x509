@@ -27,7 +27,12 @@ public enum KeyAlgorithm
     /**
      * RSA
      */
-    RSA("RSA");
+    RSA("RSA"),
+
+    /**
+     * DSA
+     */
+    DSA("DSA");
 
     private final String algorithm;
 

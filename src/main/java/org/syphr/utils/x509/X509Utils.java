@@ -76,10 +76,6 @@ public class X509Utils
                                                         InvalidKeyException,
                                                         SignatureException
     {
-        /*
-         * This will need to be modified if more key algorithms are added. This
-         * will only work for PKCS8 encoded RSA private keys.
-         */
         KeySpec privateKeySpec = new PKCS8EncodedKeySpec(IOUtils.toByteArray(key));
 
         try

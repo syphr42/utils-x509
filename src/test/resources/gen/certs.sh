@@ -22,7 +22,7 @@ then
 	echo "Generate an X.509 certificate, a PEM encoded private key, and a PKCS8 encoded private key."
 	echo ""
 	echo "  KEYNAME                  a name to identify the generate certificate and keys"
-	echo "  HOST                     the host name to be identified in the certificate"
+	echo "  HOST                     the host name to be identified in the certificate (default: localhost)"
 	
 	exit 1;
 fi

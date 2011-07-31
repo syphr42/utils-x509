@@ -16,6 +16,9 @@
 package org.syphr.utils.x509;
 
 import java.security.Signature;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A set of allowed X.509 signature algorithms.
@@ -57,7 +60,83 @@ public enum SignatureAlgorithm
     /**
      * SHA-512 with RSA
      */
-    SHA512_RSA("SHA512withRSA");
+    SHA512_RSA("SHA512withRSA"),
+
+    /**
+     * DSA with no digest
+     */
+    NONE_DSA("NONEwithDSA"),
+
+    /**
+     * SHA-1 with DSA
+     */
+    SHA1_DSA("SHA1withDSA");
+
+    @SuppressWarnings("serial")
+    private static List<SignatureAlgorithm> RSA = new ArrayList<SignatureAlgorithm>()
+    {
+        {
+            add(NONE_RSA);
+            add(MD2_RSA);
+            add(MD5_RSA);
+            add(SHA1_RSA);
+            add(SHA256_RSA);
+            add(SHA384_RSA);
+            add(SHA512_RSA);
+        }
+    };
+
+    @SuppressWarnings("serial")
+    private static List<SignatureAlgorithm> DSA = new ArrayList<SignatureAlgorithm>()
+    {
+        {
+            add(NONE_DSA);
+            add(SHA1_DSA);
+        }
+    };
+
+    /**
+     * Retrieve a list of algorithms that use RSA.
+     *
+     * @return the complete list of RSA-based algorithms
+     */
+    public static List<SignatureAlgorithm> getRsaAlgorithms()
+    {
+        return Collections.unmodifiableList(RSA);
+    }
+
+    /**
+     * Retrieve a list of algorithms that use DSA.
+     *
+     * @return the complete list of DSA-based algorithms
+     */
+    public static List<SignatureAlgorithm> getDsaAlgorithms()
+    {
+        return Collections.unmodifiableList(DSA);
+    }
+
+    /**
+     * Retrieve a list of signature algorithms that use the given key algorithm.
+     *
+     * @param keyAlg
+     *            the key algorithm
+     * @return the complete list of appropriate signature algorithms
+     */
+    public static List<SignatureAlgorithm> getAlgorithms(KeyAlgorithm keyAlg)
+    {
+        switch (keyAlg)
+        {
+            case RSA:
+                return getRsaAlgorithms();
+
+            case DSA:
+                return getDsaAlgorithms();
+
+            default:
+                throw new IllegalArgumentException("Unknown key algorithm: "
+                                                   + keyAlg);
+        }
+    }
 
     private final String algorithm;
 
