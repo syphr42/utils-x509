@@ -15,8 +15,18 @@
  */
 package org.syphr.utils.x509;
 
+import java.security.KeyFactory;
+
+/**
+ * A set of allowed private key algorithms for creating X.509 signatures.
+ *
+ * @author Gregory P. Moyer
+ */
 public enum KeyAlgorithm
 {
+    /**
+     * RSA
+     */
     RSA("RSA");
 
     private final String algorithm;
@@ -26,6 +36,12 @@ public enum KeyAlgorithm
         this.algorithm = algorithm;
     }
 
+    /**
+     * Get the string representation of this algorithm suitable for use with a
+     * {@link KeyFactory} in JCS.
+     *
+     * @return the JCS algorithm name
+     */
     public String getAlgorithm()
     {
         return algorithm;

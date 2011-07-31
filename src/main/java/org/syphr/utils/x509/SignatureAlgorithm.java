@@ -15,8 +15,18 @@
  */
 package org.syphr.utils.x509;
 
+import java.security.Signature;
+
+/**
+ * A set of allowed X.509 signature algorithms.
+ *
+ * @author Gregory P. Moyer
+ */
 public enum SignatureAlgorithm
 {
+    /**
+     * MD5 with RSA
+     */
     MD5_RSA("MD5withRSA");
 
     private final String algorithm;
@@ -26,6 +36,12 @@ public enum SignatureAlgorithm
         this.algorithm = algorithm;
     }
 
+    /**
+     * Get the string representation of this algorithm suitable for use with a
+     * {@link Signature} in JCS.
+     *
+     * @return the JCS algorithm name
+     */
     public String getAlgorithm()
     {
         return algorithm;
