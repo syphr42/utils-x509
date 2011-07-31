@@ -25,9 +25,39 @@ import java.security.Signature;
 public enum SignatureAlgorithm
 {
     /**
+     * RSA with no digest
+     */
+    NONE_RSA("NONEwithRSA"),
+
+    /**
+     * MD2 with RSA
+     */
+    MD2_RSA("MD2withRSA"),
+
+    /**
      * MD5 with RSA
      */
-    MD5_RSA("MD5withRSA");
+    MD5_RSA("MD5withRSA"),
+
+    /**
+     * SHA-1 with RSA
+     */
+    SHA1_RSA("SHA1withRSA"),
+
+    /**
+     * SHA-256 with RSA
+     */
+    SHA256_RSA("SHA256withRSA"),
+
+    /**
+     * SHA-384 with RSA
+     */
+    SHA384_RSA("SHA384withRSA"),
+
+    /**
+     * SHA-512 with RSA
+     */
+    SHA512_RSA("SHA512withRSA");
 
     private final String algorithm;
 
