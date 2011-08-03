@@ -39,7 +39,7 @@ fi
 openssl req -x509 \
             -nodes \
             -days 365 \
-            -subj "/C=US/ST=Somestate/L=Anytown/CN=$HOST" \
+            -subj "/CN=$HOST" \
             -newkey rsa:1024 \
             -keyout $NAME.pem \
             -out $NAME.x509

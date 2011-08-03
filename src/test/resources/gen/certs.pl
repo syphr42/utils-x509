@@ -92,5 +92,5 @@ else
     exit(1);
 }
 
-system("openssl req -x509 -nodes -days 365 -subj \"/C=US/ST=Somestate/L=Anytown/CN=$host\" -newkey $type:\"$param\" -keyout \"$dir/$name.pem\" -out \"$dir/$name.x509\"") == 0 or die("Failed to generate X.509 certificate: $!\n");
+system("openssl req -x509 -nodes -days 365 -subj \"/CN=$host\" -newkey $type:\"$param\" -keyout \"$dir/$name.pem\" -out \"$dir/$name.x509\"") == 0 or die("Failed to generate X.509 certificate: $!\n");
 system("openssl pkcs8 -topk8 -in \"$dir/$name.pem\" -out \"$dir/$name.pkcs8\" -nocrypt -inform PEM -outform DER") == 0 or die("Failed to convert private key to PKCS8: $!\n");
