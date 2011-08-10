@@ -25,7 +25,7 @@
 	<parent>
 		<groupId>org.syphr</groupId>
 		<artifactId>syphr-parent</artifactId>
-		<version>3</version>
+		<version>4-SNAPSHOT</version>
 	</parent>
 
 	<name>X.509 Utilities</name>
