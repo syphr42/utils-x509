@@ -17,7 +17,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.syphr</groupId>
 	<artifactId>utils-x509</artifactId>
 	<version>0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -25,7 +24,7 @@
 	<parent>
 		<groupId>org.syphr</groupId>
 		<artifactId>syphr-parent</artifactId>
-		<version>4-SNAPSHOT</version>
+		<version>4</version>
 	</parent>
 
 	<name>X.509 Utilities</name>
